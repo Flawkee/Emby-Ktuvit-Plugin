@@ -15,7 +15,7 @@ This project is a plugin for [Emby](https://emby.media/) that automatically down
 
 ## Installation
 
-1. Build the project using Visual Studio 2022 (.NET 8).
+1. Build the project using Visual Studio 2022 (.NET 8) or download from Releases.
 2. Place the compiled plugin DLL and resources in Emby’s `plugins` directory.
 3. Restart Emby Server.
 4. Configure the plugin in Emby’s web interface under __Settings > Plugins > Ktuvit__.
