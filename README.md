@@ -15,6 +15,9 @@ This project is a plugin for [Emby](https://emby.media/) that automatically down
 
 ## Installation
 
+This plugin is available though Emby Plugins Catalog! If you want to compile it yourself, follow the steps below:
+
+
 1. Build the project using Visual Studio 2022 (.NET 8) or download from Releases.
 2. Place the compiled plugin DLL and resources in Emby’s `plugins` directory.
 3. Restart Emby Server.
