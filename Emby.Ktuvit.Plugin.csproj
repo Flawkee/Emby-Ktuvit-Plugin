@@ -1,27 +1,39 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <AssemblyName>Emby.Ktuvit.Plugin</AssemblyName>
-    <RootNamespace>Ktuvit.Plugin</RootNamespace>
-    <LangVersion>12.0</LangVersion>
-    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<AssemblyName>Emby.Ktuvit.Plugin</AssemblyName>
+		<RootNamespace>Ktuvit.Plugin</RootNamespace>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+		<Version>1.0.1.0</Version>
+		<Authors>Flawkee</Authors>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<GeneratedAssemblyInfoFile>assemblyinfo.cs</GeneratedAssemblyInfoFile>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="MediaBrowser.Server.Core" Version="4.9.1.80" />
-    <PackageReference Include="System.Memory" Version="4.5.5" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="MediaBrowser.Server.Core" Version="4.8.2" />
+		<PackageReference Include="System.Memory" Version="4.6.3" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Remove="thumb.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="thumb.png" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="thumb.png" />
-  </ItemGroup>
-	
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	<Exec Command="copy $(TargetPath) %AppData%\Emby-Server\programdata\plugins\" />
-  </Target>
+	<ItemGroup>
+		<EmbeddedResource Include="thumb.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="copy $(TargetPath) %AppData%\Emby-Server\programdata\plugins\" />
+	</Target>
 </Project>

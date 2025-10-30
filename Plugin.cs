@@ -10,6 +10,7 @@ using MediaBrowser.Model.Logging;
 using MediaBrowser.Model.Serialization;
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace Ktuvit.Plugin
 {
@@ -26,7 +27,7 @@ namespace Ktuvit.Plugin
         public override sealed string Name => PluginName;
 
         public static string PluginName = "Ktuvit";
-        public override Guid Id => new Guid("a1b2c3d4-e5f6-7890-abcd-ef1234567890");
+        public override Guid Id => new Guid("634A51FB-8EDE-43AF-8D19-EA9379182D44");
         public override string Description => "Downloads Hebrew subtitles from Ktuvit.me";
         public static Plugin Instance { get; private set; }
         public PluginConfiguration Options => this.GetOptions();
