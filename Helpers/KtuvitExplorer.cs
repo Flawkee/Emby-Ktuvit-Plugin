@@ -299,6 +299,36 @@ namespace Ktuvit.Plugin.Helpers
             }
             return null;
         }
+        
+        public bool KtuvitAccessValidation()
+        {
+            try
+            {
+                var httpRequest = new HttpRequestOptions();
+                httpRequest.Url = ApiBaseUrl;
+                var requestTimeout = Plugin.Instance.Options.requestTimeout ?? 2;
+                httpRequest.TimeoutMs = requestTimeout * 1000; // in milliseconds
+                var responseTask = _httpClient.GetResponse(httpRequest);
+                responseTask.Wait(); // Block until complete
+                var response = responseTask.Result;
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    _logger.Info("Ktuvit: Access validation successful.");
+                    return true;
+                }
+                else
+                {
+                    _logger.Error($"Ktuvit: Access validation failed with status code {response.StatusCode}. Ktuvit might not be available.");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Ktuvit: Access validation failed. Ktuvit might not be available: {ex}");
+                return false;
+            }
+        }
+
         // Synchronous authentication for use in Validate
         public bool KtuvitAuthentication(string username, string password)
         {

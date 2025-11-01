@@ -20,13 +20,15 @@ namespace Ktuvit.Plugin.Configuration
                                                     + "Login credentials (username and password) are only required for movie subtitles.\n"
                                                     + "If credentials are not provided, the plugin will still download series subtitles.\n\n";
 
+        [DisplayName("Ktuvit Request Timeout")]
+        [Description("Request Timeout (in seconds): If not configured, the default is 2 seconds. This should be set and saved before setting up username and password. This setting is helpful if Ktuvit.me is unavailable, ensuring that subtitle search doesn't wait the full 30 seconds (the Emby default) before returning a response.")]
+        public int? requestTimeout { get; set; }
         [DisplayName("Ktuvit Username")]
         [Description("Email address registered in Ktuvit.me")]
         public string Username { get; set; }
         [DisplayName("Ktuvit Password")]
         [IsPassword]
         public string Password { get; set; }
-
         protected override void Validate(ValidationContext context)
         {
             var explorer = KtuvitExplorer.Instance;
@@ -41,10 +43,24 @@ namespace Ktuvit.Plugin.Configuration
             {
                 return;
             }
-            var authenticationStatus = explorer.KtuvitAuthentication(Username, Password);
-            if (!authenticationStatus)
+
+            if (requestTimeout.HasValue && (requestTimeout.Value <= 0 || requestTimeout.Value >= 30))
             {
-                context.AddValidationError("Failed to authenticate Ktuvit.me. Please validate your credentials.");
+                context.AddValidationError("Request Timeout must be a greater than 0 and lower than 30 seconds.");
+                return;
+            }
+            var accessStatus = explorer.KtuvitAccessValidation();
+            if (!accessStatus)
+            {
+                context.AddValidationError("Could not reach Ktuvit.me with the request timeout configured. Ktuvit.me might be unavailable, Please try again later.");
+            }
+            else
+            {
+                var authenticationStatus = explorer.KtuvitAuthentication(Username, Password);
+                if (!authenticationStatus)
+                {
+                    context.AddValidationError("Failed to authenticate Ktuvit.me. Please validate your credentials.");
+                }
             }
         }
     }

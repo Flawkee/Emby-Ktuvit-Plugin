@@ -53,7 +53,13 @@ namespace Ktuvit.Plugin
             }
             else
             {
-                _logger.Info($"Ktuvit: Hebrew subtitle search was initiated");
+                _logger.Info($"Ktuvit: Hebrew subtitle search was initiated. Validating Ktuvit is available.");
+                var accessStatus = _ktuvitExplorer.KtuvitAccessValidation();
+                if (!accessStatus)
+                {
+                    _logger.Warn($"Ktuvit: Ktuvit.me is not reachable. Exiting subtitle search.");
+                    return Enumerable.Empty<RemoteSubtitleInfo>();
+                }
             }
 
             try
